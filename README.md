@@ -55,6 +55,35 @@ Any of the above, will raise an exception.
 If no error is detected during the second traversal, the semantic correctness of the input program is
 unquestionable.
 
+## Run it
+
+In order to run the type checker, we first need to compile the program,
+so after changing to src directory, type:
+
+```bash
+make
+```
+
+To type check a single .java source file, type
+
+```bash
+java Main <input_file>
+```
+
+or even a series of files by typing
+
+```bash
+java Main <input_0> <input_n> ... <input_n>
+```
+
+To view the exact offset in memory starting from the class-pointer for each field as well as the offset
+of each member-method from the vTable pointer(this) of that particular class
+run Main with the --offsets flag. For example
+
+```bash
+java Main ../tests/pass/Quicksort.java --offsets
+```
+
 ## Testing
 
 Directory _tests_ contains all kinds of valid and invalid input files, taking into consideration

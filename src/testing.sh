@@ -30,28 +30,28 @@ do
         java $main $folder/$i $offsets
 
         # allow user to take a look at the input file using the default editor
-        #ans=""
-        #while [ "$ans" != "y" ] && [ "$ans" != "n" ]
-        #do
-        #    echo "want to see input file(y/n)"
-        #    read -n 1 ans
-        #done
-        #if [ $ans == "y" ]
-        #then
-        #    editor $folder/$i
-        #fi
+        ans=""
+        while [ "$ans" != "y" ] && [ "$ans" != "n" ]
+        do
+            echo "want to see input file(y/n)"
+            read -n 1 ans
+        done
+        if [ $ans == "y" ]
+        then
+            editor $folder/$i
+        fi
 
         # allow user to skip the rest of the files in this directory
-        #ans=""
-        #while [ "$ans" != "y" ] && [ "$ans" != "n" ]
-        #do
-        #    echo "continue(y/n)"
-        #    read -n 1 ans
-        #done
-        #if [ $ans == "n" ]
-        #then
-        #    break
-        #fi
+        ans=""
+        while [ "$ans" != "y" ] && [ "$ans" != "n" ]
+        do
+            echo "continue(y/n)"
+            read -n 1 ans
+        done
+        if [ $ans == "n" ]
+        then
+            break
+        fi
     done
 done
 if [ "$offsets" == "" ]

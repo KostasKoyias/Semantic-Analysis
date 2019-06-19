@@ -84,5 +84,7 @@ class Main {
             }
 
         }
+        if(!displayOffsets)
+            System.out.println("To view field and method offsets for each class rerun with --offsets");
     }
 }
