@@ -1,32 +1,31 @@
 import syntaxtree.*;
 import java.util.Map;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
-
 import javafx.util.Pair;
 import java.io.*;
 
 class Main {
     public static void main (String [] args) throws RuntimeException{
-        boolean error = false, displayOffsets = false;
+        boolean displayOffsets = false;
         FileInputStream fis = null;
+        ArrayList<String> paths = new ArrayList<String>();
 
         for(String arg: args){
             if(arg.equals("--offsets"))
                 displayOffsets = true;
+            else
+                paths.add(arg);
         }
 
         /* for each file path given from the cmd */
-        for(String arg : args){
-            if(arg.equals("--offsets"))
-                continue;
+        for(String path : paths){
 
             /* try and: open, parse and visit the syntax tree of the program */
             try{
 
-                fis = new FileInputStream(arg);
+                fis = new FileInputStream(path);
                 MiniJavaParser parser = new MiniJavaParser(fis);
-                System.out.println("\033[1m" + arg + "\033[0m\nParsing:\u001B[32m\033[1m Successful \u001B[0m");
+                System.out.println("\033[1m" + path + "\033[0m\nParsing:\u001B[32m\033[1m Successful \u001B[0m");
 
                 /* first, traverse the tree once, to create the lookup symbol table and report minor errors*/
                 FirstVisitor v0 = new FirstVisitor();
@@ -64,7 +63,6 @@ class Main {
             /* handle exceptions */
             catch(SemError e){
                 System.out.println(e.getMessage());
-                error = true;
             }
             catch(ParseException ex){
                 System.out.println(ex.getMessage());
@@ -85,6 +83,6 @@ class Main {
 
         }
         if(!displayOffsets)
-            System.out.println("To view field and method offsets for each class rerun with --offsets");
+            System.out.println("Main: To view field and method offsets for each class rerun with --offsets");
     }
 }

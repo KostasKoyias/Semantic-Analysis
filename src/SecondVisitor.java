@@ -1,8 +1,6 @@
 import java.util.Map;
 import javafx.util.Pair;
-import java.util.LinkedHashMap; 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import visitor.GJNoArguDepthFirst;
 import syntaxtree.*;
@@ -20,7 +18,7 @@ public class SecondVisitor extends GJNoArguDepthFirst<String> {
     private void addInScope(){
         Map<String, Pair<String, Integer>> map = this.table.get(this.className).vars;
         for(String key: map.keySet())
-            this.scope.add(new Pair(key, map.get(key).getKey()));
+            this.scope.add(new Pair<String, String>(key, map.get(key).getKey()));
     }
 
     /* check whether a data type is a primitive or a user-defined class */
@@ -158,7 +156,7 @@ public class SecondVisitor extends GJNoArguDepthFirst<String> {
             throw new SemError("undefined type '" + varType + "'", this.row);    
         
         /* Add variable to scope list */
-        this.scope.add(new Pair(node.f1.accept(this), varType));	
+        this.scope.add(new Pair<String, String>(node.f1.accept(this), varType));	
         return null;
     }
 
@@ -216,7 +214,7 @@ public class SecondVisitor extends GJNoArguDepthFirst<String> {
             throw new SemError("undefined type: '" + varType + "'", this.row);
 
         /* Insert all parameters in scope */
-        this.scope.add(new Pair(name, varType));
+        this.scope.add(new Pair<String, String>(name, varType));
         return null;
     }
 
@@ -276,18 +274,16 @@ public class SecondVisitor extends GJNoArguDepthFirst<String> {
         f0 -> Identifier() = f2 -> Expression();
     */
     public String visit(AssignmentStatement node) throws RuntimeException {
-        String var = node.f0.accept(this), exprType = node.f2.accept(this), hasType = lastDeclarationOf(this.scope, var), subType;
+        String var = node.f0.accept(this), exprType = node.f2.accept(this), hasType = lastDeclarationOf(this.scope, var);
       
         /* make sure the variable on the left of the assignment is declared and get the innermost declaration of its*/
         if (hasType == null)
             throw new SemError("undeclared variable '" + var + "'", this.row); 
        
         /* use recursion to make sure the right hand side expression evaluates to a matching data type, equivalent or sub-type */ 
-        ClassData cd = this.table.get(exprType); 
         if(isSubType(exprType, hasType))
             return null;
         throw new SemError("assigning '" + exprType + "' to a variable declared as '" + hasType + "'", this.row);
-
     }
 
     /*  ArrayAssignmentStatement

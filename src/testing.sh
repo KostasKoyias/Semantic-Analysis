@@ -56,6 +56,6 @@ do
 done
 if [ "$offsets" == "" ]
 then 
-    echo "re-run with --offsets to view the exact state of virtual memory" 
+    echo -e "testing.sh: To view field and method offsets for each class rerun with \e[1m--offsets\e[0m" 
 fi
 exit 0
