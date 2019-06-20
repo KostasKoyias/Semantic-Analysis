@@ -3,7 +3,7 @@
 ## Intrο
 
 The purpose of this project is building a semantic analysis tool for a subset
-of Java, MiniJava, given the grammar it supports in JavaCC form and using JTB
+of Java, MiniJava, given the [grammar](http://cgi.di.uoa.gr/~thp06/project_files/minijava-new/minijava.html) it supports [in JavaCC form](http://cgi.di.uoa.gr/~thp06/project_files/minijava-new/minijava.jj) and using JTB
 tool to convert it into class hierarchies. After that, a series of visitors will
 inspect the input file and report any possible semantic errors/mismatches.
 
@@ -87,7 +87,7 @@ java Main ../tests/pass/Quicksort.java --offsets
 ## Testing
 
 Directory _tests_ contains all kinds of valid and invalid input files, taking into consideration
-each and every possible error type. Run bash script _testing_.sh to make sure all test cases are passed.
+each and every possible error type. Run bash script _testing_.sh under _src_ directory to make sure all test cases are passed.
 
 Hopefully, this document makes things a bit more clear.  
 Thank you.
